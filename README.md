@@ -7,7 +7,7 @@
 ## 追記
 
 - aws cli install
-  - https://docs.aws.amazon.com/ja_jp/cli/latest/userguide/getting-started-install.htmlß
+  - https://docs.aws.amazon.com/ja_jp/cli/latest/userguide/getting-started-install.html
 - colipot cli install
   - https://aws.github.io/copilot-cli/ja/docs/getting-started/install
 
