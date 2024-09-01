@@ -33,9 +33,20 @@
     --port 8501
   ```
 - デプロイが終わったらWEBページにはアクセスできる。が、会話しようとすると権限が足りずに実行時エラーとなる
-- ecsのタスクロールに以下のポリシーを追加（TODO コマンド化）。これで会話ができるようになる
-  - AmazonBedrockFullAccess
-  - AmazonDynamoDBFullAccess
+- ecsのタスクロールにポリシーを追加（これで会話が可能になる）
+  - ecsのタスクロール名を確認（`taskRoleArn` の `:role`/の後ろ。下記例なら `bsc-dev-bsc-TaskRole-xxxxxxxxxxxx`）
+    ```
+    $ aws ecs describe-task-definition --task-definition `aws ecs list-task-definitions | jq -r '.taskDefinitionArns[0]'` | grep taskRole
+        "taskRoleArn": "arn:aws:iam::123456789012:role/bsc-dev-bsc-TaskRole-xxxxxxxxxxxx",
+    ```
+  - AmazonBedrockFullAccess を追加
+    ```
+    $ aws iam attach-role-policy --role-name <上記で確認したecsのタスクロール名> --policy-arn arn:aws:iam::aws:policy/AmazonBedrockFullAccess
+    ```
+  - AmazonDynamoDBFullAccess を追加
+    ```
+    $ aws iam attach-role-policy --role-name <上記で確認したecsのタスクロール名> --policy-arn arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess
+    ```
 - 使用を終了するときは下記コマンドを実行
   ```
   $ copilot app delete
